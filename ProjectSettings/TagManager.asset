@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Open
+  - Closed
+  - Marge
+  - ClassUpdate
+  - PointSecrifice
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: PaintLibrary
+    uniqueID: 719506117
+    locked: 0
+  - name: Update
+    uniqueID: 1837187525
+    locked: 0
+  - name: Lab
+    uniqueID: 561532615
+    locked: 0
+  - name: Shop
+    uniqueID: 4000890083
+    locked: 0
+  - name: MainField
+    uniqueID: 3487771189
+    locked: 0
+  - name: StaticUI
+    uniqueID: 1125444031
+    locked: 0
+  - name: ColorLoadMenu
+    uniqueID: 915494617
+    locked: 0
