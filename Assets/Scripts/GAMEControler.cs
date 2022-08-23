@@ -91,13 +91,24 @@ public class GAMEControler : MonoBehaviour
     [SerializeField] private ColorManager _colorManager;
 
     [Space]
+    [Header("SettingsMenu")]
+    [SerializeField] private AudioSource _settingsMusic;
+    [SerializeField] private AudioSource _settingsSound;
+    [SerializeField] private Slider _settingsMusicControl;
+    [SerializeField] private Slider _settingsSoundControl;
+
+    [Space]
     [Header("AnotherSettings")]
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private Canvas _mainField;
     [SerializeField] private GameObject _return;
     [SerializeField] private GameObject _modMenu;
+    [SerializeField] private GameObject _clickBar;
     [SerializeField] private TimeSystem _timeSystem;
     [SerializeField] private TextMeshProUGUI _consoleTMP;
+    [SerializeField] private TextMeshProUGUI _clickAmountTMP;
+    [SerializeField] private Animation _clickAmountAnim;
+    [SerializeField] private SoundManager _soundManager;
     private MergeMenuSave _save = new MergeMenuSave();
     private ConstParameters _constParameters = new ConstParameters();
 
@@ -118,15 +129,25 @@ public class GAMEControler : MonoBehaviour
     private static TextMeshProUGUI _console;
     private static Animation _consoleAnim;
 
-    private void Start()
+    private static TextMeshProUGUI _clickAmount;
+    private static Animation _clickAnim;
+
+    private static SoundManager _SoundManager;
+
+    private void Awake()
     {
         if (JsonSaverBase.FileExist(JsonSaverBase.MainSettingsFolder, GetInstanceID())) Load();
         else CoinCall = 5000;
-
+    }
+    private void Start()
+    {
         CoinCall = 0;
         PaintCall = 0;
         _console = _consoleTMP;
         _consoleAnim = _consoleTMP.GetComponent<Animation>();
+        _clickAmount = _clickAmountTMP;
+        _clickAnim = _clickAmountAnim;
+        _SoundManager = _soundManager;
         CheckFirstSpawnerImage();
         float paint = 0;
         foreach(Transform tr in _spawner.transform)
@@ -135,6 +156,9 @@ public class GAMEControler : MonoBehaviour
         }
         PaintPerSec = paint;
         SetParametersPerSecond(0, 0);
+
+        _settingsMusicControl.value = _settingsMusic.volume;
+        _settingsSoundControl.value = _settingsSound.volume;
 
         if(_absentTime != "") 
             _timeSystem.CheckOffline(_absentTime);
@@ -169,7 +193,6 @@ public class GAMEControler : MonoBehaviour
         }
 
         float distance = 0;
-        int count = 1;
 
         _shopContent.sizeDelta = Vector2.zero;
         for (int i = 0; i < _fabric.Count; i++)
@@ -185,14 +208,6 @@ public class GAMEControler : MonoBehaviour
 
             _shopContent.sizeDelta += new Vector2(0, shopRT.sizeDelta.y + 25);
             distance += _shopPointDistance;
-
-            if (i >= 3)
-            {
-                shop.Save = (_fabric[i], count);
-                File.WriteAllText(Path.Combine(JsonSaverBase.CurrentPlatform(), 
-                    JsonSaverBase.ShopFolder, $"0{count}.txt"), JsonUtility.ToJson(_fabric[i]));
-                count++;
-            }
         }
     }
     private void PaintLibraryFill()
@@ -266,10 +281,9 @@ public class GAMEControler : MonoBehaviour
             if(_timer > 1)
             {
                 _timer = 0;
-                PaintCall = Mathf.Round(PaintPerSec);
+                PaintCall = PaintPerSec * Clicker.factor;
             }
         }
-        if (Input.GetKeyDown(KeyCode.M)) MenuOpen(_modMenu);
     }
     public static Transform CellOutline { get; set; }
     public void CellCheckColor(Transform transform)
@@ -330,8 +344,8 @@ public class GAMEControler : MonoBehaviour
     {
         CoinPerSec += coin;
         PaintPerSec += paint;
-        _coinPerText.text = $"{CoinPerSec}/sec";
-        _paintPerText.text = $"{(float)System.Math.Round(PaintPerSec, 1)}/sec";
+        _coinPerText.text = $"{(float)System.Math.Round(CoinPerSec * Clicker.factor, 1)}/sec";
+        _paintPerText.text = $"{(float)System.Math.Round(PaintPerSec * Clicker.factor, 1)}/sec";
     }
 
     public void PointSell()
@@ -400,22 +414,22 @@ public class GAMEControler : MonoBehaviour
     {
         return
                 $"Code: {save.PointPreferance.pointParameters.Code}\n" +
-                $"Price: {save.PointPreferance.pointParameters.Price}\n" +
-                $"SellPrice: {save.PointPreferance.pointParameters.SellPrice}\n" +
-                $"CriticalDrop: {save.PointPreferance.pointParameters.CriticalDrop}\n" +
-                $"PaintPerSec: {save.PointPreferance.pointParameters.PaintPerSec}\n" +
-                $"CoinPerSec: {save.PointPreferance.pointParameters.CoinPerSec}\n" +
+                $"Price: {System.Math.Round(save.PointPreferance.pointParameters.Price,2)}\n" +
+                $"SellPrice: {System.Math.Round(save.PointPreferance.pointParameters.SellPrice, 2)}\n" +
+                $"CriticalDrop: {System.Math.Round(save.PointPreferance.pointParameters.CriticalDrop, 2)}\n" +
+                $"PaintPerSec: {System.Math.Round(save.PointPreferance.pointParameters.PaintPerSec, 2)}\n" +
+                $"CoinPerSec: {System.Math.Round(save.PointPreferance.pointParameters.CoinPerSec, 2)}\n" +
                 $"BaseClass: {save.PointPreferance.pointParameters.BaseClass}\n" +
                 $"CurrentClass: {save.PointPreferance.pointParameters.CurrentClass}\n" +
 
-                $"SameMergeChance: {System.Math.Round(save.PointPreferance.mergeParameters.SameMergeFaledChance, 1)}%\n" +
-                $"RealColorDropChance: {System.Math.Round(save.PointPreferance.mergeParameters.RealColorChance, 1)}%\n" +
-                $"Ordinary: {System.Math.Round(save.PointPreferance.mergeParameters.Ordinary, 1)}%\n" +
-                $"Unusual: {System.Math.Round(save.PointPreferance.mergeParameters.Unusual, 1)}%\n" +
-                $"Rare: {System.Math.Round(save.PointPreferance.mergeParameters.Rare, 1)}%\n" +
-                $"Epic: {System.Math.Round(save.PointPreferance.mergeParameters.Epic, 1)}%\n" +
-                $"Legendary: {System.Math.Round(save.PointPreferance.mergeParameters.Legendary, 1)}%\n" +
-                $"Mythical: {System.Math.Round(save.PointPreferance.mergeParameters.Mythical, 1)}%\n";
+                $"SameMergeChance: {System.Math.Round(save.PointPreferance.mergeParameters.SameMergeFaledChance, 2)}%\n" +
+                $"RealColorDropChance: {System.Math.Round(save.PointPreferance.mergeParameters.RealColorChance, 2)}%\n" +
+                $"Ordinary: {System.Math.Round(save.PointPreferance.mergeParameters.Ordinary, 2)}%\n" +
+                $"Unusual: {System.Math.Round(save.PointPreferance.mergeParameters.Unusual, 2)}%\n" +
+                $"Rare: {System.Math.Round(save.PointPreferance.mergeParameters.Rare, 2)}%\n" +
+                $"Epic: {System.Math.Round(save.PointPreferance.mergeParameters.Epic, 2)}%\n" +
+                $"Legendary: {System.Math.Round(save.PointPreferance.mergeParameters.Legendary, 2)}%\n" +
+                $"Mythical: {System.Math.Round(save.PointPreferance.mergeParameters.Mythical, 2)}%\n";
     }
     public static void FillParameters(MergeMenuSave Object, MergeMenuSave Data)
     {
@@ -443,6 +457,36 @@ public class GAMEControler : MonoBehaviour
         Object.PointPreferance.Color = Data.PointPreferance.Color;
         Object.PointPreferance.Sprite = Data.PointPreferance.Sprite;
         Object.PointPreferance.Material = Data.PointPreferance.Material;
+    }
+    public static MergeMenuSave MergePoint(MergeMenuSave Object, MergeMenuSave Data)
+    {
+        Object.PointPreferance.pointParameters.Price = 
+            (Object.PointPreferance.pointParameters.Price + Data.PointPreferance.pointParameters.Price) / 2;
+        Object.PointPreferance.pointParameters.CriticalDrop = 
+            (Object.PointPreferance.pointParameters.CriticalDrop + Data.PointPreferance.pointParameters.CriticalDrop) / 2;
+        Object.PointPreferance.pointParameters.PaintPerSec = 
+            (Object.PointPreferance.pointParameters.PaintPerSec + Data.PointPreferance.pointParameters.PaintPerSec) / 2;
+        Object.PointPreferance.pointParameters.CoinPerSec = 
+            (Object.PointPreferance.pointParameters.CoinPerSec + Data.PointPreferance.pointParameters.CoinPerSec) / 2;
+
+        Object.PointPreferance.mergeParameters.SameMergeFaledChance = 
+            (Object.PointPreferance.mergeParameters.SameMergeFaledChance + Data.PointPreferance.mergeParameters.SameMergeFaledChance) / 2;
+        Object.PointPreferance.mergeParameters.RealColorChance = 
+            (Object.PointPreferance.mergeParameters.RealColorChance + Data.PointPreferance.mergeParameters.RealColorChance) / 2;
+        Object.PointPreferance.mergeParameters.Ordinary = 
+            (Object.PointPreferance.mergeParameters.Ordinary + Data.PointPreferance.mergeParameters.Ordinary) / 2;
+        Object.PointPreferance.mergeParameters.Unusual = 
+            (Object.PointPreferance.mergeParameters.Unusual + Data.PointPreferance.mergeParameters.Unusual) / 2;
+        Object.PointPreferance.mergeParameters.Rare = 
+            (Object.PointPreferance.mergeParameters.Rare + Data.PointPreferance.mergeParameters.Rare) / 2;
+        Object.PointPreferance.mergeParameters.Epic = 
+            (Object.PointPreferance.mergeParameters.Epic + Data.PointPreferance.mergeParameters.Epic) / 2;
+        Object.PointPreferance.mergeParameters.Legendary = 
+            (Object.PointPreferance.mergeParameters.Legendary + Data.PointPreferance.mergeParameters.Legendary) / 2;
+        Object.PointPreferance.mergeParameters.Mythical = 
+            (Object.PointPreferance.mergeParameters.Mythical + Data.PointPreferance.mergeParameters.Mythical) / 2;
+
+        return Object;
     }
 
     public void PointInfoClose()
@@ -507,6 +551,7 @@ public class GAMEControler : MonoBehaviour
         }
         _return.SetActive(set);
         _spawner.gameObject.SetActive(!set);
+        _clickBar.gameObject.SetActive(!set);
         _sellPaintButton.SetActive(shopMenu);
         _labChest.SetActive(labMenu);
     }
@@ -521,8 +566,7 @@ public class GAMEControler : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enought money");
-            MenuOpen(_modMenu);
+            ConsoleEnter("Not enought money");
         }
     }
     private void CheckFirstSpawnerImage()
@@ -623,7 +667,7 @@ public class GAMEControler : MonoBehaviour
         slider.value = 1;
         _seller.PanelMenu.SetActive(true);
         _seller.PriceCoin.text = _coinPrice.ToString();
-        _seller.CountPaint.text = PaintCall.ToString();
+        _seller.CountPaint.text = Mathf.Round(PaintCall).ToString();
         _paintCount = PaintCall;
         _sellerResult = Mathf.FloorToInt((slider.value * _paintCount) / _coinPrice);
         _seller.Result.text = _sellerResult.ToString();
@@ -648,6 +692,12 @@ public class GAMEControler : MonoBehaviour
         CoinCall = _sellerResult;
         _seller.PanelMenu.SetActive(false);
     }
+    public void SellerUpdate() => print(_coinPrice--);
+
+
+
+    public void SettingsMusic() => _settingsMusic.volume = _settingsMusicControl.value;
+    public void SettingsSound() => _settingsSound.volume = _settingsSoundControl.value;
 
 
     [ContextMenu("PeintPerSecNull")]
@@ -693,10 +743,6 @@ public class GAMEControler : MonoBehaviour
             default:
                 return 0;
         }
-    }
-    public static void MergeParametersAfterClassUpdate(MergePointParameters mergeParameters, ColorClass colorClass)
-    {
-
     }
 
 
@@ -766,7 +812,10 @@ public class GAMEControler : MonoBehaviour
 
         ShopMenuFill(ColorClass.All);
     }
+    public static void MergeParametersAfterClassUpdate(MergePointParameters mergePoint, ColorClass colorClass)
+    {
 
+    }
 
     public void ShopClassChooseAll() => ShopMenuFill(ColorClass.All);
     public void ShopClassChooseCommon() => ShopMenuFill(ColorClass.Common);
@@ -803,16 +852,20 @@ public class GAMEControler : MonoBehaviour
     }
     public void ColorDell(ShopStand shop)
     {
+        _fabric.Remove(shop.Fabric);
         _willDeleted.Add(shop);
         _shopCreate.AddListener(Create);
     }
     public void ColorReturn(ShopStand shop)
     {
+        _fabric.Add(shop.Fabric);
         _willDeleted.Remove(shop);
     }
 
+
     public static void MenuOpen(GameObject gameObject) => gameObject.SetActive(true);
     public static void MenuClose(GameObject gameObject) => gameObject.SetActive(false);
+
     private void Save()
     {
         _save.Settings.AbsentTime = DateTime.Now.ToString();
@@ -821,6 +874,8 @@ public class GAMEControler : MonoBehaviour
         _save.Settings.CoinsPerSec = CoinPerSec;
         _save.Settings.PaintPerSec = PaintPerSec;
         _save.Settings.Colors = _fabricSpawn;
+        _save.Settings.Points = _fabric;
+        _save.Settings.SellerCoinPrice = _coinPrice;
 
         JsonSaverBase.SaveInfo(_save, JsonSaverBase.MainSettingsFolder, GetInstanceID());
     }
@@ -834,6 +889,8 @@ public class GAMEControler : MonoBehaviour
         CoinPerSec = _save.Settings.CoinsPerSec;
         PaintPerSec = _save.Settings.PaintPerSec;
         _fabricSpawn = _save.Settings.Colors;
+        _fabric = _save.Settings.Points;
+        _coinPrice = _save.Settings.SellerCoinPrice;
     }
 
 
@@ -843,6 +900,13 @@ public class GAMEControler : MonoBehaviour
         _console.text = enter;
         _consoleAnim.Play();
     }
+    public static void ClickAmount(string enter)
+    {
+        _clickAnim.Stop();
+        _clickAmount.text = enter;
+        _clickAnim.Play();
+    }
+    public static SoundManager GetAudio() => _SoundManager;
 #if PLATFORM_ANDROID && !UNITY_EDITOR
     private void OnApplicationFocus(bool focus)
     {

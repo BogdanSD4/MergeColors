@@ -32,9 +32,9 @@ public class ShopStand : MonoBehaviour
     private void SetParameters()
     {
         _product.color = Fabric.Color;
-        _priceText.text = $"Coin: {Fabric.PointParameters.Price}";
-        _paintPerSecText.text = $"Paint per second: {Fabric.PointParameters.PaintPerSec}";
-        _criticalDropText.text = $"Critical Drop: {Fabric.PointParameters.CriticalDrop}%";
+        _priceText.text = $"Coin: {System.Math.Round(Fabric.PointParameters.Price, 2)}";
+        _paintPerSecText.text = $"Paint/sec: {System.Math.Round(Fabric.PointParameters.PaintPerSec, 2)}";
+        _criticalDropText.text = $"Critical Drop: {System.Math.Round(Fabric.PointParameters.CriticalDrop, 3)}%";
     }
     public void ColorDell()
     {
@@ -61,5 +61,6 @@ public class ShopStand : MonoBehaviour
         _button.enabled = true;
     }
 
+    public void ButtonSound() => GAMEControler.GetAudio().PlayOneShotSound(SoundList.BuyCoin);
     public (Fabric, int) Save { get; set; }
 }

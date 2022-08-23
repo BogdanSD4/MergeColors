@@ -23,14 +23,25 @@ public class TimeSystem : MonoBehaviour
 
     private float _Coin;
     private float _Paint;
-    private float _CoinLimit = 10000;
-    private float _PaintLimit = 10000;
+
+    private int _CoinLimitStep = 100;
+    private int _PaintLimitStep = 10000;
+    [SerializeField] private int _CoinLimit = 100;
+    [SerializeField] private int _PaintLimit = 10000;
+    private int _coinLevel = 1;
+    private int _paintLevel = 1;
 
     public List<MergeMenuSave> mergeTimers = new List<MergeMenuSave>();
 
+    private void Awake()
+    {
+        if((_coinLevel = PlayerPrefs.GetInt("CoinLevel")) == 0) _coinLevel = 1;
+        if((_paintLevel = PlayerPrefs.GetInt("PaintLevel")) == 0) _paintLevel = 1;
+        StartLimitCount();
+    }
     private void Update()
     {
-        if(mergeTimers.Count != 0)
+        if (mergeTimers.Count != 0)
         {
             for (int i = 0; i < mergeTimers.Count; i++)
             {
@@ -39,11 +50,11 @@ public class TimeSystem : MonoBehaviour
             }
         }
     }
-    public static float TimeMinusPlayerAbsent { get; set; } 
+    public static float TimeMinusPlayerAbsent { get; set; }
 
     private void SetCorrectTime()
     {
-        for(int i = 0; i < mergeTimers.Count; i++)
+        for (int i = 0; i < mergeTimers.Count; i++)
         {
             mergeTimers[i].MenuMerge.Timer -= TimeMinusPlayerAbsent;
         }
@@ -53,7 +64,7 @@ public class TimeSystem : MonoBehaviour
     public void CheckOffline(string date)
     {
         TimeSpan ts;
- 
+
         ts = DateTime.Now - DateTime.Parse(date);
         int time = ts.Seconds + (ts.Minutes * 60) + (ts.Hours * 3600) + (ts.Days * 86400);
         _day.text = ts.Days.ToString();
@@ -64,7 +75,7 @@ public class TimeSystem : MonoBehaviour
         _coinLimit.text = _CoinLimit.ToString();
         _paintLimit.text = _PaintLimit.ToString();
 
-        _Coin= (time * _gameControler.CoinPerSec);
+        _Coin = (time * _gameControler.CoinPerSec);
         _Paint = (time * _gameControler.PaintPerSec);
 
         if (_Coin > _CoinLimit) _Coin = _CoinLimit;
@@ -85,6 +96,45 @@ public class TimeSystem : MonoBehaviour
         _gameControler.CoinCall = _Coin;
         _gameControler.PaintCall = _Paint;
         _absentMenu.SetActive(false);
+    }
+
+
+    public void LevelUpCoin()
+    {
+        _CoinLimit += _CoinLimitStep;
+        if((_coinLevel++) %10 == 0)
+        {
+            _CoinLimitStep = _CoinLimit;
+        }
+        PlayerPrefs.SetInt("CoinLevel", _coinLevel);
+    }
+    public void LevelUpPaint()
+    {
+        _PaintLimit += _PaintLimitStep;
+        if ((_paintLevel++) % 10 == 0)
+        {
+            _PaintLimitStep = _PaintLimit;
+        }
+        print(_paintLevel);
+        PlayerPrefs.SetInt("PaintLevel", _paintLevel);
+    }
+    public int CoinLevel { get { return _coinLevel; } }
+    public int PaintLevel { get { return _paintLevel; } }
+
+
+    private void StartLimitCount()
+    {
+        for(int i = 1; i < _coinLevel; i++)
+        {
+            _CoinLimit += _CoinLimitStep;
+            if (i % 10 == 0) _CoinLimitStep = _CoinLimit;
+        }
+
+        for (int i = 1; i < _paintLevel; i++)
+        {
+            _PaintLimit += _PaintLimitStep;
+            if (i % 10 == 0) _PaintLimitStep = _PaintLimit;
+        }
     }
 }
 

@@ -254,7 +254,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3676821951278974857}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6891994990842873699}
+        m_MethodName: ButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!61 &1309460729282578962
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -293,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a71a3b251df98842ab24b099b9b9c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mode: 0
   _invoke: 0.2
   _event:
   - m_PersistentCalls:
@@ -308,7 +320,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _object: {fileID: 0}
+  _object:
+  - {fileID: 0}
 --- !u!1 &1226947254291270404
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,11 +425,31 @@ MonoBehaviour:
   _paintPerSecText: {fileID: 988766422660701953}
   _criticalDropText: {fileID: 4630188295805911919}
   _garbage: {fileID: 4688664049107815234}
-  Color: {r: 0, g: 0, b: 0, a: 0}
-  _price: 50
-  _paintPerHour: 0
-  _criticalDrop: 0.1
-  BaseColor: 0
+  Fabric:
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Sprite: {fileID: 0}
+    Material: {fileID: 0}
+    BaseColor: 0
+    PointParameters:
+      Code: 
+      MergeLevel: 0
+      Price: 0
+      SellPrice: 0
+      CriticalDrop: 0
+      PaintPerSec: 0
+      CoinPerSec: 0
+      layer: 
+      BaseClass: 0
+      CurrentClass: 0
+    ParametersMerge:
+      SameMergeFaledChance: 0
+      RealColorChance: 0
+      Ordinary: 0
+      Unusual: 0
+      Rare: 0
+      Epic: 0
+      Legendary: 0
+      Mythical: 0
 --- !u!95 &5436037709182528875
 Animator:
   serializedVersion: 3

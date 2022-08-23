@@ -38,20 +38,33 @@ public class ClassUpdateControl : MonoBehaviour
     }
     private void Start()
     {
-        if (_labClassUpdatePointBefore.color == Color.clear)
+        if (_labClassBorderBefor.color == Color.clear)
         {
+            print("clear");
             _boxPoint.enabled = true;
             _boxXP.enabled = false;
             SetXpText("Color not found");
-            _labClassBorderAfter.color = Color.clear;
             _labClassUpdatePutColorTips.gameObject.SetActive(true);
+            _labClassBorderAfter.color =
+                _labClassUpdatePointBefore.color =
+                _labClassUpdatePointAfter.color = Color.clear;
         }
         else
         {
+            print("fill");
             _boxPoint.enabled = false;
-            if(_currentValue > 0) _boxXP.enabled = true;
+            if (_currentValue > 0)
+            {
+                _boxXP.enabled = true;
+                SetXpText(System.Math.Round(_currentValue).ToString() + " XP");
+            }
             else SetXpText("Ready");
             _labClassUpdatePutColorTips.gameObject.SetActive(false);
+
+            float fill = (float)(1 - _currentValue / _divider);
+            _labClassUpdateXPLine.value = fill;
+            _labClassUpdatePointBefore.fillAmount = 1 - fill;
+            _labClassUpdatePointAfter.fillAmount = fill;
         }
     }
     public bool CellState()
@@ -98,6 +111,9 @@ public class ClassUpdateControl : MonoBehaviour
         }
     }
     private void SetXpText(string text) => _labClassUpdateXP.text = text;
+
+    [ContextMenu("Finish")]
+    private void Finish() => _currentValue = 0;
 
     public void SetPoint(PointControl point)
     {
@@ -246,6 +262,7 @@ public class ClassUpdateControl : MonoBehaviour
             _parameters.PointPreferance.mergeParameters, _parameters.PointPreferance.pointParameters.CurrentClass);
     }
 
+
     private void Save()
     {
         _parameters.ClassUpdate.Active = _active;
@@ -269,13 +286,6 @@ public class ClassUpdateControl : MonoBehaviour
         _labClassBorderBefor.color = _parameters.ClassUpdate.BorderColorBefore;
         _labClassBorderAfter.color = GAMEControler.ClassColor(_parameters.PointPreferance.pointParameters.CurrentClass);
         _labClassUpdatePointBefore.color = _labClassUpdatePointAfter.color = _parameters.PointPreferance.Color;
-
-        float fill = (float)(1 - _currentValue / _divider);
-        _labClassUpdateXPLine.value = fill;
-        _labClassUpdatePointBefore.fillAmount = 1 - fill;
-        _labClassUpdatePointAfter.fillAmount = fill;
-
-        SetXpText(System.Math.Round(_currentValue).ToString() + " XP");
     }
 
 #if PLATFORM_ANDROID && !UNITY_EDITOR

@@ -53,6 +53,8 @@ public class JsonSaverBase : MonoBehaviour
         mergeMenu.Settings.Paint = save.Settings.Paint;
         mergeMenu.Settings.PaintPerSec = save.Settings.PaintPerSec;
         mergeMenu.Settings.Colors = save.Settings.Colors;
+        mergeMenu.Settings.Points = save.Settings.Points;
+        mergeMenu.Settings.SellerCoinPrice = save.Settings.SellerCoinPrice;
 
         mergeMenu.ClassUpdate.Active = save.ClassUpdate.Active;
         mergeMenu.ClassUpdate.IsReady = save.ClassUpdate.IsReady;
@@ -101,6 +103,8 @@ public class JsonSaverBase : MonoBehaviour
         save.Settings.Paint = mergeMenu.Settings.Paint;
         save.Settings.PaintPerSec = mergeMenu.Settings.PaintPerSec;
         save.Settings.Colors = mergeMenu.Settings.Colors;
+        save.Settings.Points = mergeMenu.Settings.Points;
+        save.Settings.SellerCoinPrice = mergeMenu.Settings.SellerCoinPrice;
 
         save.ClassUpdate.Active = mergeMenu.ClassUpdate.Active;
         save.ClassUpdate.IsReady = mergeMenu.ClassUpdate.IsReady;
@@ -217,6 +221,8 @@ public class MergeMenuSave
         public float CoinsPerSec;
         public float PaintPerSec;
         public List<Fabric> Colors = new List<Fabric>();
+        public List<Fabric> Points = new List<Fabric>();
+        public float SellerCoinPrice;
     }
     [System.Serializable]
     public class ClassUpdateMenu

@@ -371,6 +371,12 @@ MonoBehaviour:
       Active: 0
       sprite: {fileID: 0}
       fill: 0
+      OpenCell: 0
+      NewColor: {fileID: 0}
+      MaxTime: 0
+      IsMerge: 0
+      Timer: 0
+      EventState: 0
     Settings:
       AbsentTime: 
       Coins: 0
@@ -378,14 +384,15 @@ MonoBehaviour:
       CoinsPerSec: 0
       PaintPerSec: 0
       Colors: []
-    MergeTime: []
-    OpenCell: 0
-    NewColor: {fileID: 0}
-    MaxTime: 0
-    IsMerge: 0
-    Timer: 0
-    EventState: 0
-  CellIsOpen: 0
+      Points: []
+      SellerCoinPrice: 0
+    ClassUpdate:
+      Active: 0
+      IsReady: 0
+      Devider: 0
+      CurrentValue: 0
+      NewValue: 0
+      BorderColorBefore: {r: 0, g: 0, b: 0, a: 0}
   _collider2D: {fileID: 2340987742895045642}
 --- !u!61 &2340987742895045642
 BoxCollider2D:
@@ -394,7 +401,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708256236191781545}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -523,13 +530,6 @@ MonoBehaviour:
   _mergeManager: {fileID: -5402158258063587722}
   _timeSystem: {fileID: 0}
   _labContent: {fileID: 0}
-  LabDatas:
-  - {fileID: 3299964460206176957}
-  - {fileID: 7727108703009867981}
-  - {fileID: 1486929325276804908}
-  - {fileID: 6172719799151353963}
-  points: []
-  cells: []
   NewColorImage: {fileID: 2864570978727092669}
   NewColorControl:
     PointPreferance:
@@ -573,6 +573,12 @@ MonoBehaviour:
       Active: 0
       sprite: {fileID: 0}
       fill: 0
+      OpenCell: 0
+      NewColor: {fileID: 0}
+      MaxTime: 0
+      IsMerge: 0
+      Timer: 0
+      EventState: 0
     Settings:
       AbsentTime: 
       Coins: 0
@@ -580,13 +586,16 @@ MonoBehaviour:
       CoinsPerSec: 0
       PaintPerSec: 0
       Colors: []
-    MergeTime: []
-    OpenCell: 0
-    NewColor: {fileID: 0}
-    MaxTime: 0
-    IsMerge: 0
-    Timer: 0
-    EventState: 0
+      Points: []
+      SellerCoinPrice: 0
+    ClassUpdate:
+      Active: 0
+      IsReady: 0
+      Devider: 0
+      CurrentValue: 0
+      NewValue: 0
+      BorderColorBefore: {r: 0, g: 0, b: 0, a: 0}
+  priceByBetterPoint: 0
 --- !u!1 &1317676559614291587
 GameObject:
   m_ObjectHideFlags: 0
@@ -2163,6 +2172,12 @@ MonoBehaviour:
       Active: 0
       sprite: {fileID: 0}
       fill: 0
+      OpenCell: 0
+      NewColor: {fileID: 0}
+      MaxTime: 0
+      IsMerge: 0
+      Timer: 0
+      EventState: 0
     Settings:
       AbsentTime: 
       Coins: 0
@@ -2170,14 +2185,15 @@ MonoBehaviour:
       CoinsPerSec: 0
       PaintPerSec: 0
       Colors: []
-    MergeTime: []
-    OpenCell: 0
-    NewColor: {fileID: 0}
-    MaxTime: 0
-    IsMerge: 0
-    Timer: 0
-    EventState: 0
-  CellIsOpen: 0
+      Points: []
+      SellerCoinPrice: 0
+    ClassUpdate:
+      Active: 0
+      IsReady: 0
+      Devider: 0
+      CurrentValue: 0
+      NewValue: 0
+      BorderColorBefore: {r: 0, g: 0, b: 0, a: 0}
   _collider2D: {fileID: 114683886566963872}
 --- !u!61 &114683886566963872
 BoxCollider2D:
@@ -2186,7 +2202,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6161073585167124302}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -2786,6 +2802,12 @@ MonoBehaviour:
       Active: 0
       sprite: {fileID: 0}
       fill: 0
+      OpenCell: 0
+      NewColor: {fileID: 0}
+      MaxTime: 0
+      IsMerge: 0
+      Timer: 0
+      EventState: 0
     Settings:
       AbsentTime: 
       Coins: 0
@@ -2793,14 +2815,15 @@ MonoBehaviour:
       CoinsPerSec: 0
       PaintPerSec: 0
       Colors: []
-    MergeTime: []
-    OpenCell: 0
-    NewColor: {fileID: 0}
-    MaxTime: 0
-    IsMerge: 0
-    Timer: 0
-    EventState: 0
-  CellIsOpen: 0
+      Points: []
+      SellerCoinPrice: 0
+    ClassUpdate:
+      Active: 0
+      IsReady: 0
+      Devider: 0
+      CurrentValue: 0
+      NewValue: 0
+      BorderColorBefore: {r: 0, g: 0, b: 0, a: 0}
   _collider2D: {fileID: 5540305882528178206}
 --- !u!61 &5540305882528178206
 BoxCollider2D:
@@ -2809,7 +2832,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7120064288191169390}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -3244,6 +3267,12 @@ MonoBehaviour:
       Active: 0
       sprite: {fileID: 0}
       fill: 0
+      OpenCell: 0
+      NewColor: {fileID: 0}
+      MaxTime: 0
+      IsMerge: 0
+      Timer: 0
+      EventState: 0
     Settings:
       AbsentTime: 
       Coins: 0
@@ -3251,14 +3280,15 @@ MonoBehaviour:
       CoinsPerSec: 0
       PaintPerSec: 0
       Colors: []
-    MergeTime: []
-    OpenCell: 0
-    NewColor: {fileID: 0}
-    MaxTime: 0
-    IsMerge: 0
-    Timer: 0
-    EventState: 0
-  CellIsOpen: 0
+      Points: []
+      SellerCoinPrice: 0
+    ClassUpdate:
+      Active: 0
+      IsReady: 0
+      Devider: 0
+      CurrentValue: 0
+      NewValue: 0
+      BorderColorBefore: {r: 0, g: 0, b: 0, a: 0}
   _collider2D: {fileID: 7889354116425355597}
 --- !u!61 &7889354116425355597
 BoxCollider2D:
@@ -3267,7 +3297,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8156577205251991584}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0

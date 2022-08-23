@@ -18,18 +18,10 @@ public class LabDataEvent : MonoBehaviour
             ImageFill();
         }
     }
-    private void Start()
-    {
-        if (Point.MenuMerge.CellIsOpen)
-        {
-            if (Point.MenuMerge.Active) _collider2D.enabled = false;
-            else _collider2D.enabled = true;
-        }
-        else _collider2D.enabled = false;
-    }
 
     private void ImageFill()
     {
+        AddColorToMenu();
         Image.gameObject.SetActive(Point.MenuMerge.Active);
         Image.color = Point.PointPreferance.Color;
         Image.sprite = Point.MenuMerge.sprite;
@@ -37,14 +29,15 @@ public class LabDataEvent : MonoBehaviour
     private MergeMenuSave MenuFill()
     {
         Point.MenuMerge.Active = Image.gameObject.activeSelf;
+        Point.PointPreferance.Color = Image.color;
         Point.MenuMerge.sprite = Image.sprite;
-        Point.MenuMerge.fill = Image.fillAmount;
         return Point;
     }
 
 
     public bool ShowColliderState() => Image.gameObject.activeSelf;
-
+    public void AddColorToMenu() => labMenu.AddData(this);
+    public void RemoveColorOutMenu() => labMenu.RemoveData(this);
 
     private void OnEnable()
     {

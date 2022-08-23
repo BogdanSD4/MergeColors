@@ -31,7 +31,7 @@ public class MargeManager : MonoBehaviour
     {
         if (!_labMenu.NewColorControl.MenuMerge.IsMerge)
         {
-            if (_labMenu.CellCheckFill() < 2)
+            if (_labMenu.ColorsInMenu() < 2)
             {
                 GAMEControler.ConsoleEnter("For merge you need two (or more) Colors");
                 return;
@@ -40,6 +40,7 @@ public class MargeManager : MonoBehaviour
             {
                 _labMenu.ColliderControl(false);
                 _labMenu.GetParameters();
+                _labMenu.NewColorControl.MenuMerge.Active = true;
                 _labMenu.NewColorImage.color = _labMenu.NewColorControl.PointPreferance.Color;
             }
         }
@@ -49,6 +50,8 @@ public class MargeManager : MonoBehaviour
     public void MergeButtonGet()
     {
         _labMenu.GetLabContent().MergeButtonGet(_labMenu.NewColorControl, this);
+        _labMenu.NewColorControl.MenuMerge.Active = false;
+        if (_labMenu.priceByBetterPoint != 0) print("better");
     }
 
     public void ClearMergeMenu()
@@ -56,6 +59,7 @@ public class MargeManager : MonoBehaviour
         _labMenu.NewColorImage.gameObject.SetActive(false);
         _labMenu.ColliderControl(true);
         _labMenu.NewColorControl.MenuMerge.IsMerge = false;
+        _labMenu.RemoveAllData();
         SetEventStart();
         _labMenu.SetButtonText($"Start");
         _labMenu.NewColorControl.MenuMerge.EventState = false;

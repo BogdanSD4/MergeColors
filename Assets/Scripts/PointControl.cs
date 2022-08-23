@@ -191,12 +191,16 @@ public class PointControl : MonoBehaviour, IPointerUpHandler, IBeginDragHandler
         {
             case GAMEControler._LAYER_close:
                 SetColor setColor1 = result.GetComponent<SetColor>();
-                if (setColor1.Color == _point.PointPreferance.Color && setColor1.MergeCount == _point.PointPreferance.pointParameters.MergeLevel)
+                if (setColor1.Color == _point.PointPreferance.Color && 
+                    setColor1.MergeCount == _point.PointPreferance.pointParameters.MergeLevel)
                 {
                     PointControl pointControl = setColor1.Point.GetComponent<PointControl>();
                     float chance = Random.Range(0, 100);
                     bool crit = false;
                     if (chance <= _point.PointPreferance.pointParameters.CriticalDrop) crit = true;
+
+                    _point = GAMEControler.MergePoint(_point, pointControl._point);
+
                     pointControl._margeCountText.text = $"{pointControl.ActiveMerge(crit)}";
 
                     DontSave = true;
@@ -212,11 +216,13 @@ public class PointControl : MonoBehaviour, IPointerUpHandler, IBeginDragHandler
                 labData.Point.PointPreferance.constParameters = _point.PointPreferance.constParameters;
                 labData.Point.PointPreferance.mergeParameters = _point.PointPreferance.mergeParameters;
 
+                labData.Point.MenuMerge.CellIsOpen = true;
                 labData.Image.gameObject.SetActive(true);
                 labData.Image.sprite = _image.sprite;
                 labData.Image.color = _image.color;
                 labData.Image.fillAmount = 1;
 
+                labData.AddColorToMenu();
                 DontSave = true;
                 Destroy(this.gameObject);
                 break;

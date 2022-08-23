@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class SetColor : MonoBehaviour
 {
@@ -21,14 +22,23 @@ public class SetColor : MonoBehaviour
 
     private void Start()
     {
-        image = GetComponent<Image>();
-
-        if (PlayerPrefs.HasKey($"CellIsOpen({GetInstanceID()})") | CellIsOpen)
+        if (PlayerPrefs.HasKey($"CellIsOpen({GetInstanceID()})")) CellIsOpen = true;
+        if (CellIsOpen)
         {
-            CellIsOpen = true;
             Reset.AddListener(this.ResetParameters);
             Check.AddListener(this.CurrentColor);
         }
+        else
+        {
+            EventTrigger eventTrigger = gameObject.AddComponent<EventTrigger>();
+
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerDown;
+            entry.callback.AddListener((data) => { OnPointerDownDelegate((PointerEventData)data); });
+            eventTrigger.triggers.Add(entry);
+        }
+
+        image = GetComponent<Image>();
         CheckCellState();
     }
     private void CheckCellState()
@@ -37,6 +47,10 @@ public class SetColor : MonoBehaviour
         {
             image.color = Color.gray;
             gameObject.layer = GAMEControler._LAYER_close;
+        }
+        else
+        {
+            Destroy(GetComponent<EventTrigger>());
         }
     }
     public void OpenCell(bool requst)
@@ -69,7 +83,17 @@ public class SetColor : MonoBehaviour
         MergeCount = 0;
     }
 
-    private void OnMouseDown()
+    public void PointerDown()
+    {
+        if (!CellIsOpen)
+        {
+            GAMEControler.CurrentCell = this;
+            _text.text = $"Want Buy?\n" +
+                $"({GAMEControler.OpenPrice * 5} paint)";
+            GAMEControler.MenuOpen(_menu);
+        }
+    }
+    public void OnPointerDownDelegate(PointerEventData data)
     {
         if (!CellIsOpen)
         {

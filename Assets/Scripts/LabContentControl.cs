@@ -83,38 +83,48 @@ public class LabContentControl : MonoBehaviour
 
         _afterMergePointCharacters.text =
             $"Code: {point.Code}\n" +
-            $"Price: {point.Price}  <color={CompareHelper(point.Price, pointMarket.Price)}>{pointMarket.Price}</color>\n" +
-            $"SellPrice: {point.SellPrice}  <color={CompareHelper(pointMarket.SellPrice, point.SellPrice)}>{pointMarket.SellPrice}</color>\n" +
-            $"CriticalDrop: {point.CriticalDrop}  <color={CompareHelper(pointMarket.CriticalDrop, point.CriticalDrop)}>{pointMarket.CriticalDrop}</color>\n" +
-            $"PaintPerSec: {point.PaintPerSec}  <color={CompareHelper(pointMarket.PaintPerSec, point.PaintPerSec)}>{pointMarket.PaintPerSec}</color>\n" +
-            $"CoinPerSec: {point.CoinPerSec}  <color={CompareHelper(pointMarket.CoinPerSec, point.CoinPerSec)}>{pointMarket.CoinPerSec}</color>\n" +
+            $"Price: {System.Math.Round(point.Price,2)}  " +
+                $"<color={CompareHelper(point.Price, pointMarket.Price)}>" +
+                $"{System.Math.Round(pointMarket.Price,2)}</color>\n" +
+            $"SellPrice: {System.Math.Round(point.SellPrice,2)}  " +
+                $"<color={CompareHelper(pointMarket.SellPrice, point.SellPrice)}>" +
+                $"{System.Math.Round(pointMarket.SellPrice,2)}</color>\n" +
+            $"CriticalDrop: {System.Math.Round(point.CriticalDrop,2)}  " +
+                $"<color={CompareHelper(pointMarket.CriticalDrop, point.CriticalDrop)}>" +
+                $"{System.Math.Round(pointMarket.CriticalDrop,2)}</color>\n" +
+            $"PaintPerSec: {System.Math.Round(point.PaintPerSec,2)}  " +
+                $"<color={CompareHelper(pointMarket.PaintPerSec, point.PaintPerSec)}>" +
+                $"{System.Math.Round(pointMarket.PaintPerSec,2)}</color>\n" +
+            $"CoinPerSec: {System.Math.Round(point.CoinPerSec,2)}  " +
+                $"<color={CompareHelper(pointMarket.CoinPerSec, point.CoinPerSec)}>" +
+                $"{System.Math.Round(pointMarket.CoinPerSec,2)}</color>\n" +
             $"BaseClass: {point.BaseClass}\n" +
             $"CurrentClass: {point.CurrentClass}\n" +
 
-            $"SameMergeChance: {System.Math.Round(pointMerge.SameMergeFaledChance, 1)}%  " +
+            $"SameMergeChance: {System.Math.Round(pointMerge.SameMergeFaledChance, 2)}%  " +
                 $"<color={CompareHelper(pointMerge.SameMergeFaledChance, pointMergeMarket.SameMergeFaledChance)}>" +
-                $"{System.Math.Round(pointMergeMarket.SameMergeFaledChance, 1)}</color>\n" +
-            $"RealColorDropChance: {System.Math.Round(pointMerge.RealColorChance, 1)}%  " +
+                $"{System.Math.Round(pointMergeMarket.SameMergeFaledChance, 2)}%</color>\n" +
+            $"RealColorDropChance: {System.Math.Round(pointMerge.RealColorChance, 2)}%  " +
                 $"<color={CompareHelper(pointMerge.RealColorChance, pointMergeMarket.RealColorChance)}>" +
-                $"{System.Math.Round(pointMergeMarket.RealColorChance, 1)}</color>\n" +
-            $"Ordinary: {System.Math.Round(pointMerge.Ordinary, 1)}%  " +
+                $"{System.Math.Round(pointMergeMarket.RealColorChance, 2)}%</color>\n" +
+            $"Ordinary: {System.Math.Round(pointMerge.Ordinary, 2)}%  " +
                 $"<color={CompareHelper(pointMergeMarket.Ordinary, pointMerge.Ordinary)}>" +
-                $"{System.Math.Round(pointMergeMarket.Ordinary, 1)}</color>\n" +
-            $"Unusual: {System.Math.Round(pointMerge.Unusual, 1)}%  " +
+                $"{System.Math.Round(pointMergeMarket.Ordinary, 2)}%</color>\n" +
+            $"Unusual: {System.Math.Round(pointMerge.Unusual, 2)}%  " +
                 $"<color={CompareHelper(pointMergeMarket.Unusual, pointMerge.Unusual)}>" +
-                $"{System.Math.Round(pointMergeMarket.Unusual, 1)}</color>\n" +
-            $"Rare: {System.Math.Round(pointMerge.Rare, 1)}%  " +
+                $"{System.Math.Round(pointMergeMarket.Unusual, 2)}%</color>\n" +
+            $"Rare: {System.Math.Round(pointMerge.Rare, 2)}%  " +
                 $"<color={CompareHelper(pointMergeMarket.Rare, pointMerge.Rare)}>" +
-                $"{System.Math.Round(pointMergeMarket.Rare, 1)}</color>\n" +
-            $"Epic: {System.Math.Round(pointMerge.Epic, 1)}%  " +
+                $"{System.Math.Round(pointMergeMarket.Rare, 2)}%</color>\n" +
+            $"Epic: {System.Math.Round(pointMerge.Epic, 2)}%  " +
                 $"<color={CompareHelper(pointMergeMarket.Epic, pointMerge.Epic)}>" +
-                $"{System.Math.Round(pointMergeMarket.Epic, 1)}</color>\n" +
-            $"Legendary: {System.Math.Round(pointMerge.Legendary, 1)}%  " +
+                $"{System.Math.Round(pointMergeMarket.Epic, 2)}%</color>\n" +
+            $"Legendary: {System.Math.Round(pointMerge.Legendary, 2)}%  " +
                 $"<color={CompareHelper(pointMergeMarket.Legendary, pointMerge.Legendary)}>" +
-                $"{System.Math.Round(pointMergeMarket.Legendary, 1)}</color>\n" +
-            $"Mythical: {System.Math.Round(pointMerge.Mythical, 1)}%  " +
+                $"{System.Math.Round(pointMergeMarket.Legendary, 2)}%</color>\n" +
+            $"Mythical: {System.Math.Round(pointMerge.Mythical, 2)}%  " +
                 $"<color={CompareHelper(pointMergeMarket.Mythical, pointMerge.Mythical)}>" +
-                $"{System.Math.Round(pointMergeMarket.Mythical, 1)}</color>\n";
+                $"{System.Math.Round(pointMergeMarket.Mythical, 2)}%</color>\n";
 
         CloseMenu(_colorCompare);
     }
@@ -144,6 +154,7 @@ public class LabContentControl : MonoBehaviour
             point._point.PointPreferance.constParameters = save.PointPreferance.constParameters;
         }
 
+        _dataLab.RemoveColorOutMenu();
         _dataLab.Image.gameObject.SetActive(false);
         _dataLab.GetComponent<Collider2D>().enabled = true;
         CloseMenu(_returnColorMenu);
